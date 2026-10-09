@@ -1,0 +1,18 @@
+
+# Python temporary files
+__pycache__/
+*.pyc
+
+# Virtual environments
+.venv/
+venv/
+
+# PyCharm and VS Code settings
+.idea/
+.vscode/
+
+# Secret configuration
+.env
+
+# Generated scraping output
+scraped_data/*.csv

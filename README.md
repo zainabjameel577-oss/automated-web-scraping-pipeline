@@ -1,107 +1,91 @@
 
 # Automated Web Scraping & Data Analysis Pipeline
 
-A modular Python-based data engineering pipeline that automatically extracts, cleans, and analyzes structured e-commerce data from [Books to Scrape](http://books.toscrape.com/).
+A Python project that scrapes book information from
+[Books to Scrape](https://books.toscrape.com/), saves the
+results to CSV, and analyzes the collected data using pandas.
 
-The project follows clean coding standards, separating raw HTML data extraction from tabular data analysis and terminal presentation.
+## Features
 
----
+- Extracts book titles, ratings, prices, and stock status.
+- Saves scraped data to a CSV file.
+- Converts prices and ratings into numeric values.
+- Filters five-star books by price and stock status.
+- Sorts books by title, rating, and price.
+- Separates scraping, CSV storage, and analysis into modules.
 
-## 📌 Features
-
-* **Targeted Web Extraction:** Uses `BeautifulSoup4` with direct class targeting (`.instock`) and normalized text parsing (`.split()`) to extract titles, stock statuses, prices, and ratings clean of HTML noise.
-* **Data Processing & Storage:** Converts raw extracted data into structured `pandas` DataFrames and exports clean CSV datasets.
-* **Numeric Mapping & Filtering:** Maps textual ratings (`One` through `Five`) into numerical values for complex mathematical querying (e.g., filtering 5-star books under specific price thresholds).
-* **Structured Terminal Output:** Uses custom f-string padding and alignment to render clean, tabular terminal views without raw, unformatted outputs.
-* **Modular Architecture:** Built following DRY (*Don't Repeat Yourself*) principles with separated concerns (`main.py` for extraction, `analyzer.py` for analytical processing, and dedicated handler modules).
-
----
-
-## 📁 Repository Structure
+## Project Structure
 
 ```text
 automated-web-scraping-pipeline/
-│
 ├── handlers/
 │   ├── __init__.py
-│   └── csv_handler.py        # Dataset export and filesystem logic
-│
+│   └── csv_handler.py
 ├── scraped_data/
-│   └── all_books_output.csv  # Output dataset (generated upon execution)
-│
-├── analyze_books.py          # Data analysis, transformation, and custom table display
-├── main.py                   # Main scraper orchestration entry point
-├── .gitignore                # Excludes virtual environments and temporary configuration
-└── README.md                 # Project documentation
-
+│   └── all_books_output.csv
+├── main.py
+├── analyze_books.py
+├── requirements.txt
+├── .gitignore
+└── README.md
 ```
 
----
+The `scraped_data` folder and CSV are generated when the scraper runs.
 
-## 🛠️ Tech Stack & Dependencies
+## Technologies
 
-* **Language:** Python 3.x
-* **Scraping & Parsing:** `BeautifulSoup4`, `requests`
-* **Data Manipulation & Analysis:** `pandas`
+- Python
+- Requests
+- BeautifulSoup
+- pandas
+- CSV
 
----
+## Installation
 
-## 🚀 Getting Started
-
-### 1. Clone the Repository
+Install the dependencies in your Python environment:
 
 ```bash
-git clone [https://github.com/zainabjameel577-oss/automated-web-scraping-pipeline.git](https://github.com/zainabjameel577-oss/automated-web-scraping-pipeline.git)
-cd automated-web-scraping-pipeline
-
+pip install -r requirements.txt
 ```
 
-### 2. Install Dependencies
+## How to Run
 
-```bash
-pip install pandas beautifulsoup4 requests
+### Step 1: Scrape the books
 
-```
+Run `main.py`.
 
-### 3. Run the Scraper
+The scraper collects book information and creates:
 
-Generate the dataset from the live target site:
+`scraped_data/all_books_output.csv`
 
-```bash
-python main.py
+### Step 2: Analyze the results
 
-```
+Run `analyze_books.py`.
 
-### 4. Run the Data Analyzer
+The analyzer displays:
 
-Perform data transformations, clean price conversions, and output filtered subsets:
+- Three most expensive books
+- Five-star books under £20
+- Five-star books in stock
+- Titles sorted alphabetically
+- Highest-rated books
+- Highest-priced books
+- Affordable five-star books in stock
 
-```bash
-python analyze_books.py
+## Data Fields
 
-```
+| Field | Description |
+|---|---|
+| Title | Book title |
+| Rating | Rating from One to Five |
+| Price | Book price |
+| Stock | Stock availability |
 
----
+## Notes
 
-## 📊 Sample Output Format
+This project uses Books to Scrape, a demonstration website
+intended for scraping practice.
 
-When running the analysis pipeline, output tables are dynamically aligned in the terminal:
-
-```text
-Title: A Light in the Attic                     | Rating: Three  | Price: £51.77 | Stock: In stock
-Title: Tipping the Velvet                       | Rating: One    | Price: £53.74 | Stock: In stock
---------------------------------------------------------------------------------------------------------------
-
-```
-
----
-
-## 🛡️ Best Practices Applied
-
-* **Robust Data Cleaning:** String stripping and whitespace normalization occur during the initial scrape to avoid dirty imports down the line.
-* **Safe Column Formatting:** Numerical parsing handles currency symbol removal smoothly for mathematical operations (`.loc[]` filtering).
-* **Git Hygiene:** Unnecessary IDE metadata (`.idea/`) and output data logs are managed cleanly via `.gitignore`.
-
-```
-
-```
+Generated CSV files are excluded from Git by default.
+A small sample dataset can be added to the repository if
+you want to demonstrate the output.
